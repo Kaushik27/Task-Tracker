@@ -4,7 +4,7 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 
 function App() {
-
+  const [showAddTask, setShowAddtask] = useState(false)
   const [tasks, setTasks ] = useState([
     {
         id: 1,
@@ -53,8 +53,8 @@ const toggleReminder = (id) => {
 
   return (
     <div className="container">
-      <Header />
-      <AddTask onAdd={addTask}/>
+      <Header onAdd={() => setShowAddtask(!showAddTask)} showAdd = {showAddTask}/>
+      {showAddTask && <AddTask onAdd={addTask}/>}
       <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/>
     </div>
   );
