@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Header  from "./components/Header";
+import Footer from "./components/Footer";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import About from "./components/About";
 
 function App() {
   const [showAddTask, setShowAddtask] = useState(false);
@@ -58,7 +61,7 @@ function App() {
     await fetch(`http://localhost:5000/tasks/${id}`, {
       method: 'DELETE'
     })
-    setTasks(tasks.filter((task) => task.id != id));
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   // Toggle reminder
@@ -83,8 +86,8 @@ function App() {
     );
   };
 
-  return (
-    <div className="container">
+  const Home = () => (
+    <>
       <Header
         onAdd={() => setShowAddtask(!showAddTask)}
         showAdd={showAddTask}
@@ -95,7 +98,19 @@ function App() {
       ) : (
         "No tasks to show"
       )}
-    </div>
+      <Footer />
+    </>
+  );
+
+  return (
+    <Router>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
